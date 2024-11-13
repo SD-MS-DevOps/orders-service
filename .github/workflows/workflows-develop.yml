@@ -27,6 +27,11 @@ jobs:
        # working-directory: BE-MS/orders-service
         run: mvn -B package --file pom.xml
 
+      - name: Upload JAR file
+        uses: actions/upload-artifact@v4
+        with:
+          name: orders-service.jar
+         # path: BE-MS/orders-service/target/*.jar
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
@@ -51,9 +56,9 @@ jobs:
 
   #  orders-service
       
-      - name: Build and Test orders-service
+ #     - name: Build and Test orders-service
        # working-directory: BE-MS/orders-service
-        run: mvn -B package --file pom.xml
+  #      run: mvn -B package --file pom.xml
 
     #  - name: Upload JAR file
      #   uses: actions/upload-artifact@v4
