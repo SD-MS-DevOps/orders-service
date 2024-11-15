@@ -14,10 +14,7 @@ on:
       - develop  
 
 jobs:
-  sonar-test:
-      uses: SD-MS-DevOps/orders-service/.github/workflows/sonacloud.yml@develop
-  #    with:
-
+  
   build:
 
     runs-on: ubuntu-latest
@@ -60,3 +57,7 @@ jobs:
         with:
            name: Package
            path: staging 
+
+  sonar-test:
+    uses: SD-MS-DevOps/orders-service/.github/workflows/sonacloud.yml@develop
+  #    with:     
