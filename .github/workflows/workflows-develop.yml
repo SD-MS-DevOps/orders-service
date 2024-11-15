@@ -5,15 +5,18 @@ on:
   push:
     branches:
       - develop
-  repository_dispatch:
-    types:
-      - sonar-test
+  #repository_dispatch:
+  #  types:
+  #    - sonar-test
   workflow_dispatch:
   pull_request:
     branches:
       - develop  
 
 jobs:
+  
+  #sonar-test:
+  # uses: SD-MS-DevOps/orders-service/.github/workflows/sonacloud.yml@develop
   
   build:
 
@@ -35,18 +38,18 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-     # - name: Cache SonarCloud packages
-     #   uses: actions/cache@v4
-     #   with:
-     #       path: ~/.sonar/cache
-     #       key: ${{ runner.os }}-sonar
-     #       restore-keys: ${{ runner.os }}-sonar  
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+            path: ~/.sonar/cache
+            key: ${{ runner.os }}-sonar
+            restore-keys: ${{ runner.os }}-sonar  
 
-     # - name: Build test con sonarcloud
-     #   env:
-     #      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-     #      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-     #   run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SD-MS-DevOps_orders-service
+      - name: Build test con sonarcloud
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SD-MS-DevOps_orders-service
       
       - name: Build and Test orders-service
         run: mvn -B package -DskipTests --file pom.xml
@@ -86,7 +89,4 @@ jobs:
           # Empujar la imagen a ECR
        #   docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/my-repo-name:latest 
 
-
-  sonar-test:
-    uses: SD-MS-DevOps/orders-service/.github/workflows/sonacloud.yml@develop
-  #    with:     
+    
