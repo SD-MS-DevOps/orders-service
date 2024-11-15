@@ -1,7 +1,7 @@
 name: SonarCloud Analysis
 
 on:
-  workflow_dispatch:
+  workflow_call:  # Este es el disparador para permitir que este flujo de trabajo sea invocado por otros.
   repository_dispatch:
     types:
       - sonar-test
