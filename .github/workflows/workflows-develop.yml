@@ -57,6 +57,35 @@ jobs:
         with:
            name: Package
            path: staging 
+       
+       # Descargar los artefactos (archivos .jar)
+      - name: Download JAR files
+        uses: actions/download-artifact@v4
+        with:
+          name: Package
+          path: ./artifact
+
+      # Construir la imagen Docker con el JAR descargado
+      - name: Build Docker image
+        run: |
+          docker build --build-arg JAR_FILE=./artifact/orders-service-example-0.0.1-SNAPSHOT-spring-boot.jar -t orders-service:dev-latest .
+
+      # Iniciar sesión en AWS ECR
+      #- name: Log in to Amazon ECR
+      #  uses: aws-actions/amazon-ecr-login@v1
+
+      # Etiquetar la imagen Docker para ECR
+      #- name: Tag Docker image
+      #  run: |
+          # Sustituye con tu repositorio de ECR y el tag adecuado
+      #    docker tag my-image-name:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/my-repo-name:latest
+
+      # Subir la imagen Docker a ECR
+     # - name: Push Docker image to ECR
+      #  run: |
+          # Empujar la imagen a ECR
+       #   docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/my-repo-name:latest 
+
 
   sonar-test:
     uses: SD-MS-DevOps/orders-service/.github/workflows/sonacloud.yml@develop
