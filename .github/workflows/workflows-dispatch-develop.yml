@@ -18,6 +18,6 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: SD-MS-DevOps/IaC-DevOps
           event-type: orders-service
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+          client-payload: '{"ref": "refs/heads/develop", "sha": "${{ github.sha }}"}'
       
     
