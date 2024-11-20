@@ -20,7 +20,7 @@ jobs:
             # Detect branch type and set environment
       - name: Set environment variable
         run: |
-             echo "BRANCH=${{ steps.branch-names.outputs.ref_branch }}" >> $GITHUB_ENV 
+              echo "BRANCH=${{ steps.branch-names.outputs.ref_branch }}" >> $GITHUB_ENV 
             
       - run:  echo "${{ env.BRANCH}}"
       - name: Dispatch repository event
@@ -28,8 +28,6 @@ jobs:
         with:
                token: ${{ secrets.REPO_ACCESS_TOKEN }}
                repository: SD-MS-DevOps/IaC-DevOps
-               event-type: ms-service
+               event-type: ms-orders
                client-payload: '{"ref": "${{ github.ref }}","sha": "${{ github.sha }}","repository": "${{ github.repository }}"}'
-              
- #,"environment": "${{ env.BRANCH }}"}'
                  

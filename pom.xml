@@ -14,11 +14,11 @@
 	<name>orders-service-example</name>
 	<description>Demo project for migrating Monolith to Microservices</description>
 	<properties>
+	    <sonar.organization>sd-ms-devops</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.projectVersion>1.0</sonar.projectVersion>
 		<java.version>1.8</java.version>
 		<!-- Propiedades para SonarCloud -->
-		   <sonar.organization>sd-ms-devops</sonar.organization>
-           <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-           <sonar.projectVersion>1.0</sonar.projectVersion>
 	</properties>
 	<dependencies>
 		<dependency>
