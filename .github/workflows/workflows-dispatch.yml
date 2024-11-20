@@ -13,30 +13,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get branch names
+        id: branch-names
+        uses: tj-actions/branch-names@v8
       # Verificar la rama   
-      - name: Repository Dispatch for develop
-        if: github.ref_name == 'develop'
+            # Detect branch type and set environment
+      - name: Set environment variable
+        run: |
+             echo "BRANCH=${{ steps.branch-names.outputs.ref_branch }}" >> $GITHUB_ENV 
+             echo "env=dev" >> $GITHUB_ENV
+      - run:  echo "${{ env.BRANCH}}"
+      - name: Dispatch repository event
         uses: peter-evans/repository-dispatch@v3
         with:
-           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-           repository: SD-MS-DevOps/IaC-DevOps
-           event-type: orders-service
-           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
-  
-      - name: Repository Dispatch for staging
-        if: github.ref_name == 'staging'
-        uses: peter-evans/repository-dispatch@v3
-        with:
-           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-           repository: SD-MS-DevOps/IaC-DevOps
-           event-type: orders-service
-           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
-  
-      - name: Repository Dispatch for main
-        if: github.ref_name == 'main'
-        uses: peter-evans/repository-dispatch@v3
-        with:
-           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-           repository: SD-MS-DevOps/IaC-DevOps
-           event-type: orders-service
-           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'    
+               token: ${{ secrets.REPO_ACCESS_TOKEN }}
+               repository: SD-MS-DevOps/IaC-DevOps
+               event-type: ms-service
+               client-payload: |
+                 {
+                   "ref": "${{ github.ref }}",
+                   "sha": "${{ github.sha }}",
+                   "repository": "${{ github.repository }}",
+                   "environment": "${{ env.BRANCH }}"
+                 }
+    
