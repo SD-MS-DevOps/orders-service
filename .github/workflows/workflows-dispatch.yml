@@ -1,4 +1,4 @@
-name: Workflow
+name: Workflow 
 on:
   push:
     branches:
@@ -13,30 +13,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Verificar la rama   
-      - name: Repository Dispatch for develop
-        if: github.ref_name == 'develop'
-        uses: peter-evans/repository-dispatch@v3
+      - name: Get branch names
+        id: branch-names
+        uses: tj-actions/branch-names@v8
+     
+        # Verificar la rama   
+      - name: Get branch name
+        run: |
+          echo "${{ steps.branch-names.outputs.ref_branch }}"
+           
+      - uses: peter-evans/repository-dispatch@v3
         with:
            token: ${{ secrets.REPO_ACCESS_TOKEN }}
            repository: SD-MS-DevOps/IaC-DevOps
            event-type: orders-service
-           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
-  
-      - name: Repository Dispatch for staging
-        if: github.ref_name == 'staging'
-        uses: peter-evans/repository-dispatch@v3
-        with:
-           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-           repository: SD-MS-DevOps/IaC-DevOps
-           event-type: orders-service
-           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
-  
-      - name: Repository Dispatch for main
-        if: github.ref_name == 'main'
-        uses: peter-evans/repository-dispatch@v3
-        with:
-           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-           repository: SD-MS-DevOps/IaC-DevOps
-           event-type: orders-service
-           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'    
+           client-payload: '{"ref": "${{ steps.branch-names.outputs.ref_branch }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
