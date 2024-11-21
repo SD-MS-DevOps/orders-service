@@ -26,5 +26,5 @@ jobs:
         with:
            token: ${{ secrets.REPO_ACCESS_TOKEN }}
            repository: SD-MS-DevOps/IaC-DevOps
-           event-type: orders-service
+           event-type: ms-orders
            client-payload: '{"ref": "${{ steps.branch-names.outputs.ref_branch }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
