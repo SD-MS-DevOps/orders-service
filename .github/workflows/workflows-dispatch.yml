@@ -18,7 +18,7 @@ jobs:
         uses: tj-actions/branch-names@v8
      
         # Verificar la rama   
-      - name: Get branch name
+      - name: Get branch names
         run: |
           echo "${{ steps.branch-names.outputs.ref_branch }}"
            
