@@ -18,7 +18,7 @@ jobs:
         uses: tj-actions/branch-names@v8
      
         # Verificar la rama   
-      - name: Get branch names
+      - name: Get branch name
         run: |
           echo "${{ steps.branch-names.outputs.ref_branch }}"
            
@@ -26,5 +26,5 @@ jobs:
         with:
            token: ${{ secrets.REPO_ACCESS_TOKEN }}
            repository: SD-MS-DevOps/IaC-DevOps
-           event-type: ms-orders
+           event-type: ms-orders-${{ steps.branch-names.outputs.ref_branch }}
            client-payload: '{"ref": "${{ steps.branch-names.outputs.ref_branch }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
