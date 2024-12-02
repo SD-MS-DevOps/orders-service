@@ -17,8 +17,8 @@ jobs:
         id: branch-names
         uses: tj-actions/branch-names@v8
      
-        # Verificar la rama   
-      - name: Get branch names
+        # Verificar la rama donde se hace el push   
+      - name: Get branch name
         run: |
           echo "${{ steps.branch-names.outputs.ref_branch }}"
            
