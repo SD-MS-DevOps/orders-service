@@ -5,6 +5,7 @@ on:
       - develop
       - staging
       - main
+  workflow_dispatch:
 
 jobs:
 
