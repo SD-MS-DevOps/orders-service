@@ -16,16 +16,15 @@ jobs:
       - name: Get branch names
         id: branch-names
         uses: tj-actions/branch-names@v8
-     
+
         # Verificar la rama donde se hace push  
       - name: Get branch names
         run: |
           echo "${{ steps.branch-names.outputs.ref_branch }}"
-           
+
       - uses: peter-evans/repository-dispatch@v3
         with:
            token: ${{ secrets.REPO_ACCESS_TOKEN }}
            repository: SD-MS-DevOps/IaC-DevOps
            event-type: ms-orders-${{ steps.branch-names.outputs.ref_branch }}
            client-payload: '{"ref": "${{ steps.branch-names.outputs.ref_branch }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
-                 
